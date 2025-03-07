@@ -1,55 +1,91 @@
-# Type IO List Generator
+# ISA Type I/O List Generator
 
-This project is a Type IO List Generator that creates and manages ISA type IO lists based on user-defined parameters. It provides a simple interface for adding, removing, and modifying items in the list.
+A modern JavaScript tool for generating standardized ISA (Instrument Society of America) type Input/Output lists for industrial automation projects.
 
 ## Table of Contents
 
+- [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
-- [File Structure](#file-structure)
+- [API](#api)
+- [I/O Point Structure](#io-point-structure)
 - [Contributing](#contributing)
 - [License](#license)
+- [Links](#links)
+
+## Features
+
+- Create standardized I/O lists with proper ISA formatting
+- Support for all common signal types (AI, AO, DI, DO, PI, etc.)
+- Export to multiple formats (JSON, CSV, Excel)
+- Validation of I/O points according to ISA standards
+- Web interface for easy list creation and management
 
 ## Installation
 
-To install the project, clone the repository and run the following command in the project directory:
+```bash
+# Clone the repository
+git clone https://github.com/concept10/type-io-list-generator.git
 
-```
+# Navigate to the project directory
+cd type-io-list-generator
+
+# Install dependencies 
 npm install
 ```
 
-This will install all necessary dependencies.
-
 ## Usage
 
-To use the Type IO List Generator, you can run the application using the following command:
+### Command Line
 
-```
-node src/index.js
+```bash
+npm start
 ```
 
-You can modify the input parameters in `src/index.js` to generate different IO lists.
+### Web Interface
 
-## File Structure
+Open `index.html` in your browser to use the web interface.
 
+## API
+
+```javascript
+const { generateIOList } = require('./src/generator');
+
+const config = {
+  projectName: 'My Automation Project',
+  revision: '1.0',
+  date: '2025-03-07',
+  outputFormat: 'json'
+};
+
+const result = generateIOList(config);
+console.log(`Generated I/O list saved to: ${result.outputPath}`);
 ```
-type-io-list-generator
-├── src
-│   ├── index.js          # Entry point of the application
-│   ├── generator.js      # Logic for generating the IO list
-│   ├── types.js          # Type definitions and constants
-│   └── utils
-│       └── helpers.js    # Utility functions for the application
-├── package.json          # NPM configuration file
-├── .gitignore            # Git ignore file
-├── index.html            # Main HTML file for the application
-└── README.md             # Project documentation
-```
+
+## I/O Point Structure
+
+Each I/O point has the following attributes:
+
+- `tagNumber`: Unique identifier (e.g., AI0001)
+- `signalType`: Type of signal (AI, AO, DI, DO, etc.)
+- `description`: Text description of the point
+- `units`: Engineering units (mA, V, etc.)
+- `rangeMin`: Minimum range value
+- `rangeMax`: Maximum range value
+- `hardwareAddress`: Physical I/O address
+- `notes`: Additional information
+- `alarmLow`: Low alarm threshold
+- `alarmHigh`: High alarm threshold
 
 ## Contributing
 
-Contributions are welcome! Please open an issue or submit a pull request for any improvements or bug fixes.
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
-This project is licensed under the MIT License. See the LICENSE file for more details.
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Links
+
+- [GitHub Repository](https://github.com/concept10/type-io-list-generator)
+- [Issue Tracker](https://github.com/concept10/type-io-list-generator/issues)
