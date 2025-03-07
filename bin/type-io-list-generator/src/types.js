@@ -42,24 +42,8 @@ const IO_POINT_TEMPLATE = {
   alarmHigh: null,
 };
 
-// This file defines the types used in the application, such as interfaces or constants that represent different ISA types.
-
-const ISA_TYPES = {
-    INPUT: 'input',
-    OUTPUT: 'output',
-    PROCESS: 'process',
-};
-
-const ISA_TYPE_DESCRIPTIONS = {
-    [ISA_TYPES.INPUT]: 'Represents an input type in the ISA.',
-    [ISA_TYPES.OUTPUT]: 'Represents an output type in the ISA.',
-    [ISA_TYPES.PROCESS]: 'Represents a processing type in the ISA.',
-};
-
 module.exports = {
   ISA_SIGNAL_TYPES,
   ISA_PARAMETERS,
-  IO_POINT_TEMPLATE,
-  ISA_TYPES,
-  ISA_TYPE_DESCRIPTIONS
+  IO_POINT_TEMPLATE
 };
