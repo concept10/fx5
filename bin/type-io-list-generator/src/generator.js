@@ -20,7 +20,7 @@ function generateIOList(config) {
       revision: config.revision || '1.0',
       date: config.date || new Date().toISOString().split('T')[0],
       generatedBy: 'ISA Type IO List Generator',
-    },  
+    },
     items: []
   };
   
