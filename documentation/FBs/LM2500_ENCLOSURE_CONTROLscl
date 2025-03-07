@@ -1,0 +1,122 @@
+// Filename: LM2500_ENCLOSURE_CONTROL.scl
+// Description: Function block for controlling LM2500 enclosure ventilation system
+FUNCTION_BLOCK LM2500_ENCLOSURE_CONTROL
+
+VAR_INPUT
+    r_EnclosureTemp    : REAL;   // Enclosure temperature in °C
+    r_AmbientTemp      : REAL;   // Ambient temperature in °C
+    r_Humidity         : REAL;   // Humidity in %
+    r_StaticPressure   : REAL;   // Static pressure in Pa
+    r_ExhaustTemp      : REAL;   // Turbine exhaust temperature in °C
+    r_TurbineLoad      : REAL;   // Turbine load in %
+    b_FireDetection    : BOOL;   // Fire detection signal
+    b_GasDetection     : BOOL;   // Gas detection signal
+END_VAR
+
+VAR_OUTPUT
+    r_FanSpeedSetpoint : REAL;   // Fan speed output in RPM
+    r_DamperPosition   : REAL;   // Damper position output in % (0-100)
+    b_AlarmCondition   : BOOL;   // Alarm condition detected
+END_VAR
+
+VAR_TEMP
+    r_MinDelta      : REAL;      // Minimum delta for finding closest match
+    r_CurrentDelta  : REAL;      // Current calculation delta
+    i_MatchIdx      : INT;       // Index of best match
+    i               : INT;       // Loop counter
+    r_TempDelta     : REAL;      // Temperature differential
+END_VAR
+
+VAR CONSTANT
+    // Control setpoints based on operating conditions
+    // Format: Load_EnclosureTemp_ExhaustTemp
+    FANSPEED_25_30_300 : REAL := 1100.0;    // Low load condition
+    FANSPEED_50_35_450 : REAL := 1350.0;    // Mid load condition
+    FANSPEED_75_40_550 : REAL := 1600.0;    // High load condition
+    FANSPEED_100_45_650 : REAL := 1900.0;   // Full load condition
+    
+    DAMPER_25_30_300 : REAL := 30.0;        // Low load damper position
+    DAMPER_50_35_450 : REAL := 50.0;        // Mid load damper position
+    DAMPER_75_40_550 : REAL := 70.0;        // High load damper position
+    DAMPER_100_45_650 : REAL := 90.0;       // Full load damper position
+    
+    EMERGENCY_FAN_SPEED : REAL := 2000.0;   // Emergency ventilation speed
+    EMERGENCY_DAMPER_POS : REAL := 100.0;   // Full open in emergency
+END_VAR
+
+VAR
+    // Structured lookup table parameters
+    a_rLoad        : ARRAY[0..3] OF REAL := (25.0, 50.0, 75.0, 100.0); 
+    a_rEncTemp     : ARRAY[0..3] OF REAL := (30.0, 35.0, 40.0, 45.0);
+    a_rExhTemp     : ARRAY[0..3] OF REAL := (300.0, 450.0, 550.0, 650.0);
+    a_rFanSpeed    : ARRAY[0..3] OF REAL := (FANSPEED_25_30_300, FANSPEED_50_35_450, 
+                                            FANSPEED_75_40_550, FANSPEED_100_45_650);
+    a_rDamperPos   : ARRAY[0..3] OF REAL := (DAMPER_25_30_300, DAMPER_50_35_450,
+                                            DAMPER_75_40_550, DAMPER_100_45_650);
+END_VAR
+
+BEGIN
+    // Check for emergency conditions first
+    IF b_FireDetection OR b_GasDetection THEN
+        // Emergency ventilation mode
+        r_FanSpeedSetpoint := EMERGENCY_FAN_SPEED;
+        r_DamperPosition := EMERGENCY_DAMPER_POS;
+        b_AlarmCondition := TRUE;
+        RETURN;
+    END_IF;
+    
+    // Calculate temperature differential for enhanced control
+    r_TempDelta := r_EnclosureTemp - r_AmbientTemp;
+    
+    // Initialize with maximum possible value
+    r_MinDelta := 10000.0;
+    i_MatchIdx := 0;
+    b_AlarmCondition := FALSE;
+    
+    // Find closest match from lookup table using weighted Euclidean distance
+    FOR i := 0 TO 3 DO
+        r_CurrentDelta := SQRT(
+            EXPT((r_TurbineLoad - a_rLoad[i])/25.0, 2.0) +         // Normalize by 25% steps
+            EXPT((r_EnclosureTemp - a_rEncTemp[i])/5.0, 2.0) +     // Normalize by 5°C steps
+            EXPT((r_ExhaustTemp - a_rExhTemp[i])/150.0, 2.0)       // Normalize by 150°C steps
+        );
+        
+        // If this is closest match so far, store it
+        IF r_CurrentDelta < r_MinDelta THEN
+            r_MinDelta := r_CurrentDelta;
+            i_MatchIdx := i;
+        END_IF;
+    END_FOR;
+    
+    // Set base fan speed and damper position based on best match
+    r_FanSpeedSetpoint := a_rFanSpeed[i_MatchIdx];
+    r_DamperPosition := a_rDamperPos[i_MatchIdx];
+    
+    // Apply fine adjustments based on humidity and pressure
+    IF r_Humidity > 80.0 THEN
+        // Increase fan speed in high humidity to prevent condensation
+        r_FanSpeedSetpoint := r_FanSpeedSetpoint * 1.1;  // 10% increase
+    END_IF;
+    
+    IF r_StaticPressure > 200.0 THEN
+        // Adjust damper for high pressure conditions
+        r_DamperPosition := r_DamperPosition + 10.0;
+    END_IF;
+    
+    // Apply limits to outputs
+    IF r_FanSpeedSetpoint > 2000.0 THEN
+        r_FanSpeedSetpoint := 2000.0;
+    END_IF;
+    
+    IF r_DamperPosition > 100.0 THEN
+        r_DamperPosition := 100.0;
+    ELSIF r_DamperPosition < 10.0 THEN
+        r_DamperPosition := 10.0;  // Minimum damper position for safety
+    END_IF;
+    
+    // Set alarm if enclosure temperature is too high
+    IF r_EnclosureTemp > 50.0 OR r_TempDelta > 25.0 THEN
+        b_AlarmCondition := TRUE;
+    END_IF;
+    
+END_FUNCTION_BLOCK

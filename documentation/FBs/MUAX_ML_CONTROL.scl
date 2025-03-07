@@ -1,0 +1,60 @@
+
+FUNCTION_BLOCK MUAX_ML_CONTROL
+
+VAR_INPUT
+    r_Temperature   : REAL;   // Temperature in °C
+    r_Humidity      : REAL;   // Humidity in %
+    r_StaticPressure : REAL;  // Static pressure in Pa
+END_VAR
+
+VAR_OUTPUT
+    r_FanSpeedSetpoint : REAL; // AI-Optimized Fan Speed Output in RPM
+END_VAR
+
+VAR_TEMP
+    r_MinDelta   : REAL;      // Minimum delta for finding closest match
+    r_CurrentDelta : REAL;    // Current calculation delta
+    i_MatchIdx   : INT;       // Index of best match
+    i           : INT;        // Loop counter
+END_VAR
+
+VAR CONSTANT
+    // Lookup table constants (Temperature_Humidity_Pressure : Speed)
+    FANSPEED_22_50_150 : REAL := 1200.0;
+    FANSPEED_24_60_180 : REAL := 1350.0;
+    FANSPEED_21_45_140 : REAL := 1100.0;
+    FANSPEED_23_55_170 : REAL := 1250.0;
+END_VAR
+
+VAR
+    // Structured lookup table parameters
+    a_rTemp     : ARRAY[0..3] OF REAL := (21.0, 22.0, 23.0, 24.0);
+    a_rHumidity : ARRAY[0..3] OF REAL := (45.0, 50.0, 55.0, 60.0);
+    a_rPressure : ARRAY[0..3] OF REAL := (140.0, 150.0, 170.0, 180.0);
+    a_rFanSpeed : ARRAY[0..3] OF REAL := (FANSPEED_21_45_140, FANSPEED_22_50_150, FANSPEED_23_55_170, FANSPEED_24_60_180);
+END_VAR
+
+BEGIN
+    // Initialize with maximum possible value
+    r_MinDelta := 10000.0;
+    i_MatchIdx := 0;
+    
+    // Find closest match from lookup table using Euclidean distance
+    FOR i := 0 TO 3 DO
+        r_CurrentDelta := SQRT(
+            EXPT(r_Temperature - a_rTemp[i], 2.0) + 
+            EXPT(r_Humidity/10.0 - a_rHumidity[i]/10.0, 2.0) + 
+            EXPT(r_StaticPressure/50.0 - a_rPressure[i]/50.0, 2.0)
+        );
+        
+        // If this is closest match so far, store it
+        IF r_CurrentDelta < r_MinDelta THEN
+            r_MinDelta := r_CurrentDelta;
+            i_MatchIdx := i;
+        END_IF;
+    END_FOR;
+    
+    // Set fan speed based on best match
+    r_FanSpeedSetpoint := a_rFanSpeed[i_MatchIdx];
+    
+END_FUNCTION_BLOCK
