@@ -81,4 +81,8 @@ function exportToControllerFormat(points, controllerType) {
   };
 }
 
-export { validateInput, formatIOList, generateUniqueId, generateTagNumber, validateIOPoint, exportToControllerFormat };
+module.exports = {
+  generateTagNumber,
+  validateIOPoint,
+  exportToControllerFormat
+};
