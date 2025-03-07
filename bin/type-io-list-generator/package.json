@@ -1,0 +1,28 @@
+{
+  "name": "type-io-list-generator",
+  "version": "1.0.0",
+  "description": "A project to generate ISA type IO lists.",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "echo \"No tests specified\" && exit 0"
+  },
+  "keywords": [
+    "ISA",
+    "IO",
+    "list",
+    "generator"
+  ],
+  "author": "concept10",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/concept10/type-io-list-generator.git"
+  },
+  "bugs": {
+    "url": "https://github.com/concept10/type-io-list-generator/issues"
+  },
+  "homepage": "https://github.com/concept10/type-io-list-generator#readme"
+}
