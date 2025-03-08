@@ -1,0 +1,26 @@
+{
+  "name": "isa112-scada-architecture",
+  "version": "1.0.0",
+  "description": "A module for generating and exporting ISA-112 SCADA architecture in JSON format.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "jest",
+    "build": "babel src -d dist"
+  },
+  "keywords": [
+    "ISA-112",
+    "SCADA",
+    "architecture",
+    "JSON",
+    "export"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "jest": "^27.0.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0"
+  }
+}
