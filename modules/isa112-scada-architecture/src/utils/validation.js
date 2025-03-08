@@ -1,28 +1,44 @@
+import { config } from '../config.js';
+
 // This file contains utility functions for validating the architecture and component data to ensure correctness before generation.
 
-function validateArchitecture(architecture) {
-    if (!architecture.name || typeof architecture.name !== 'string') {
-        throw new Error('Invalid architecture name');
+export function validateArchitecture(architecture) {
+  if (!architecture.name) {
+    throw new Error('Architecture must have a name');
+  }
+  if (!architecture.version) {
+    throw new Error('Architecture must have a version');
+  }
+  architecture.components.forEach(validateComponent);
+  architecture.relationships.forEach(validateRelationship);
+  const componentIds = new Set(architecture.components.map(c => c.id));
+  for (const relationship of architecture.relationships) {
+    if (!componentIds.has(relationship.from)) {
+      throw new Error(`Relationship references non-existent source component: ${relationship.from}`);
     }
-    if (!architecture.version || typeof architecture.version !== 'string') {
-        throw new Error('Invalid architecture version');
+    if (!componentIds.has(relationship.to)) {
+      throw new Error(`Relationship references non-existent target component: ${relationship.to}`);
     }
-    if (!Array.isArray(architecture.components)) {
-        throw new Error('Components should be an array');
-    }
-    architecture.components.forEach(component => validateComponent(component));
+  }
 }
 
-function validateComponent(component) {
-    if (!component.id || typeof component.id !== 'string') {
-        throw new Error('Invalid component id');
-    }
-    if (!component.type || typeof component.type !== 'string') {
-        throw new Error('Invalid component type');
-    }
-    if (typeof component.status !== 'string') {
-        throw new Error('Invalid component status');
-    }
+export function validateComponent(component) {
+  if (!component.id) {
+    throw new Error('Component must have an ID');
+  }
+  if (!component.type) {
+    throw new Error('Component must have a type');
+  }
 }
 
-export { validateArchitecture, validateComponent };
+export function validateRelationship(relationship) {
+  if (!relationship.from) {
+    throw new Error('Relationship must have a source');
+  }
+  if (!relationship.to) {
+    throw new Error('Relationship must have a target');
+  }
+  if (!relationship.type) {
+    throw new Error('Relationship must have a type');
+  }
+}

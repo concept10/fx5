@@ -1,7 +1,18 @@
-import { generateArchitecture } from './generators/architectureGenerator';
-import { exportToJson } from './exporters/jsonExporter';
+import { ArchitectureService } from './services/ArchitectureService.js';
+import { exportToJson } from './exporters/jsonExporter.js';
+import { config } from './config.js';
 
-const architectureData = generateArchitecture();
-const architectureJson = exportToJson(architectureData);
+export async function generateArchitecture(options = {}) {
+  const architectureService = new ArchitectureService(options);
+  const architecture = await architectureService.createArchitecture();
+  return exportToJson(architecture);
+}
 
-export default architectureJson;
+export default {
+  generateArchitecture,
+  ArchitectureService,
+  config,
+  exporters: {
+    toJson: exportToJson
+  }
+};
