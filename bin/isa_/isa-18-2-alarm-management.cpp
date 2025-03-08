@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2023 OUTLAW-DMA, LLC
+// SPDX-License-Identifier: MIT
+
 /**
  * ISA-18.2 Simulation - Management of Alarm Systems
  * This program simulates an alarm management system following ISA-18.2 principles

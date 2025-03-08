@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2023 OUTLAW-DMA, LLC
+// SPDX-License-Identifier: MIT
+
 import { generateArchitecture } from '../src/generators/architectureGenerator';
 import { Architecture } from '../src/models/architecture';
 import { Component } from '../src/models/components';

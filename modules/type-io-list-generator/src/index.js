@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2023 OUTLAW-DMA, LLC
+// SPDX-License-Identifier: MIT
+
 /**
  * ISA Type IO List Generator
  * @see https://github.com/concept10/type-io-list-generator

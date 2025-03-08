@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2023 OUTLAW-DMA, LLC
+// SPDX-License-Identifier: MIT
+
 // This file contains unit tests for the models, ensuring that the Architecture, Component, and Relationship classes function as expected.
 
 const Architecture = require('../src/models/architecture');

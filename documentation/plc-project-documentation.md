@@ -1,3 +1,6 @@
+<!-- SPDX-FileCopyrightText: 2023 OUTLAW-DMA, LLC -->
+<!-- SPDX-License-Identifier: MIT -->
+
 # Common Documentation for PLC Projects
 
 ## Design and Specification Documents

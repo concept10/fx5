@@ -1,3 +1,6 @@
+<!-- SPDX-FileCopyrightText: 2023 OUTLAW-DMA, LLC -->
+<!-- SPDX-License-Identifier: MIT -->
+
 # ISA Type I/O List Generator
 
 A modern JavaScript tool for generating standardized ISA (Instrument Society of America) type Input/Output lists for industrial automation projects.

@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2023 OUTLAW-DMA, LLC
+// SPDX-License-Identifier: MIT
+
 import { ArchitectureService } from './services/ArchitectureService.js';
 import { exportToJson } from './exporters/jsonExporter.js';
 import { config } from './config.js';

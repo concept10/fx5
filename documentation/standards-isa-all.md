@@ -1,3 +1,6 @@
+<!-- SPDX-FileCopyrightText: 2023 OUTLAW-DMA, LLC -->
+<!-- SPDX-License-Identifier: MIT -->
+
 # Comprehensive List of ISA Standards
 
 ## Instrumentation & Documentation (ISA-5 Series)

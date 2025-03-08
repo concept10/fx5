@@ -1,3 +1,6 @@
+// SPDX-CopyrightText: 2023 OUTLAW-DMA, LLC
+// SPDX-License-Identifier: MIT
+
 /**
  * ISA-5.1 Simulation - Instrumentation Symbols and Identification
  * This program simulates a system that represents and manages process instrumentation symbols

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 /**
  * ISA-61131-3 Simulation - PLC Programming Languages
  * This program simulates a basic PLC execution environment supporting 

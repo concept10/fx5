@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2023 OUTLAW-DMA, LLC
+// SPDX-License-Identifier: MIT
+
 /**
  * ISA Signal Types and Definitions
  * Based on ISA standards for process control

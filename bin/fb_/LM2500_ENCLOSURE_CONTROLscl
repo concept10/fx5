@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 // Filename: LM2500_ENCLOSURE_CONTROL.scl
 // Description: Function block for controlling LM2500 enclosure ventilation system
 FUNCTION_BLOCK LM2500_ENCLOSURE_CONTROL
