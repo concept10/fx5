@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2023 OUTLAW-DMA, LLC
+// SPDX-License-Identifier: MIT
+
 export function formatArchitectureData(architecture) {
     return {
         name: architecture.name,
