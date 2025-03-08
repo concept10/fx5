@@ -1,3 +1,6 @@
+<!-- SPDX-FileCopyrightText: 2023 OUTLAW-DMA, LLC -->
+<!-- SPDX-License-Identifier: MIT -->
+
 # ISA-112 SCADA Architecture
 
 This project provides a comprehensive module for generating and exporting the ISA-112 SCADA architecture in JSON format. It includes classes for defining architecture, components, and their relationships, along with utilities for validation and formatting.
