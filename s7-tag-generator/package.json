@@ -1,0 +1,32 @@
+{
+  "name": "s7-tag-generator",
+  "version": "1.0.0",
+  "description": "Generate S7-1500 PLC tag lists from Excel files for TIA Portal",
+  "main": "src/index.js",
+  "bin": {
+    "s7-tag-generator": "./bin/cli.js"
+  },
+  "scripts": {
+    "start": "node ./bin/cli.js",
+    "test": "jest"
+  },
+  "keywords": [
+    "S7-1500",
+    "PLC",
+    "TIA Portal",
+    "Siemens",
+    "tag list",
+    "automation"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^9.4.0",
+    "exceljs": "^4.3.0",
+    "fs-extra": "^10.1.0",
+    "xml2js": "^0.4.23"
+  },
+  "devDependencies": {
+    "jest": "^28.1.3"
+  }
+}
