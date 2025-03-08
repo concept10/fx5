@@ -1,3 +1,6 @@
+// SPDX-CopyrightText: 2023 OUTLAW-DMA, LLC
+// SPDX-License-Identifier: MIT
+
 import fs from 'fs/promises';
 import path from 'path';
 import { formatArchitectureData } from './formatters.js';

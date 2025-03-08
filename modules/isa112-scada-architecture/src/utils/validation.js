@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2023 OUTLAW-DMA, LLC
+// SPDX-License-Identifier: MIT
+
 import { config } from '../config.js';
 
 // This file contains utility functions for validating the architecture and component data to ensure correctness before generation.

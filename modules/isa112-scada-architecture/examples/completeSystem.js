@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2023 OUTLAW-DMA, LLC
+// SPDX-License-Identifier: MIT
+
 const { Architecture } = require('../src/models/architecture');
 const { Component } = require('../src/models/components');
 const { Relationship } = require('../src/models/relationships');

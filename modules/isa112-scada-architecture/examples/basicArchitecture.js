@@ -1,3 +1,6 @@
+// SPDX-CopyrightText: 2023 OUTLAW-DMA, LLC
+// SPDX-License-Identifier: MIT
+
 // This file provides an example of a basic ISA-112 architecture generation and export to JSON.
 
 import { Architecture } from '../src/models/architecture.js';

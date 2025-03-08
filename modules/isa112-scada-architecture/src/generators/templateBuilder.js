@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2023 OUTLAW-DMA, LLC
+// SPDX-License-Identifier: MIT
+
 // src/generators/templateBuilder.js
 
 export function buildArchitectureTemplate(name, version) {

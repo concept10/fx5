@@ -1,3 +1,7 @@
+
+// SPDX-FileCopyrightText: 2023 OUTLAW-DMA, LLC
+// SPDX-License-Identifier: MIT
+
 function generateISA112Architecture() {
     const Architecture = require('../models/architecture');
     const Component = require('../models/components');
